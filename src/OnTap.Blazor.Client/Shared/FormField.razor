@@ -1,0 +1,20 @@
+@typeparam TItem
+
+<div class="field">
+    <label for="@Id" class="label">@Label</label>
+    <div class="control">
+        <!-- <input @bind-value="LeagueName" @bind-value:event="oninput" class="input" type="text" /> -->        
+        <InputNumber id="@Id" @bind-Value="@Value" class="input" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public string Id { get; set; }
+
+    [Parameter]
+    public TItem Value { get; set; }
+
+    [Parameter]
+    public string Label { get; set; }   
+}

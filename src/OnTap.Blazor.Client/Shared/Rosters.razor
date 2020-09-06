@@ -1,0 +1,16 @@
+@inherits RostersBase
+@using OnTap.Blazor.Shared
+
+<h6 class="is-title">@Team.Name</h6>
+
+<h6 class="is-title">Starters</h6>
+@foreach (var rosterSpot in Starters)
+{
+    <div>@rosterSpot.Name @rosterSpot.Player?.FullName @rosterSpot.Status</div>
+}
+
+<h6 class="is-title">Bench</h6>
+@foreach (var rosterSpot in Bench)
+{
+    <div>@rosterSpot.Name @rosterSpot.Player?.FullName @rosterSpot.Status</div>
+}

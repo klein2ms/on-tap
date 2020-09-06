@@ -1,0 +1,74 @@
+
+@using System.Net.Http
+@using OnTap.Blazor.Shared
+@inject HttpClient Http
+
+<div class="container">
+@if(@Settings != null)
+{
+    <EditForm Model="@Settings" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <section>
+            <h2>Basic Settings</h2>       
+
+            <div class="field">
+                <label for="league-name" class="label">League Name</label>
+                <div class="control">
+                    <!-- <input @bind-value="LeagueName" @bind-value:event="oninput" class="input" type="text" /> -->
+                    <InputText id="league-name" @bind-Value="@Settings.LeagueName" class="input" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="number-of-teams" class="label">Number of Teams</label>
+                <div class="control">                    
+                    <InputNumber id="number-of-teams" @bind-Value="@Settings.NumberOfTeams" class="input" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="number-of-qb" class="label">Quarterback (QB)</label>
+                <div class="control">                    
+                    <InputNumber id="number-of-qb" @bind-Value="@Settings.NumberOfStartingQuarterbacks" class="input" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="number-of-rb" class="label">Running Back (RB)</label>
+                <div class="control">                    
+                    <InputNumber id="number-of-rb" @bind-Value="@Settings.NumberOfStartingRunningBacks" class="input" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="number-of-wr" class="label">Wide Receiver (WR)</label>
+                <div class="control">                    
+                    <InputNumber id="number-of-wr" @bind-Value="@Settings.NumberOfStartingWideReceivers" class="input" />
+                </div>
+            </div>
+
+            <button class="button is-link" type="submit">Save</button>
+
+        </section>
+        
+    </EditForm>
+}
+</div>
+
+@code {
+    [Parameter] int LeagueId { get; set; } = 1;
+    LeagueSettingsViewModel Settings;
+
+    async Task HandleValidSubmit() 
+    {
+        Settings = await Http.PostJsonAsync<LeagueSettingsViewModel>($"leagues/{LeagueId}/settings", Settings);
+    } 
+
+    // Settings Group -> Field (Label, Form Field)
+
+    protected override async Task OnInitAsync()
+    {
+        Settings = await Http.GetJsonAsync<LeagueSettingsViewModel>($"leagues/{LeagueId}/settings");
+    }
+}

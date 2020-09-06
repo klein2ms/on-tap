@@ -1,0 +1,67 @@
+@page "/"
+
+@using OnTap.Blazor.Shared
+@inject HttpClient Http
+
+<div class="container">
+    <div class="columns">
+        <div class="column is-3 ">
+            <aside class="menu is-hidden-mobile">
+                <p class="menu-label">
+                    General
+                </p>
+                <ul class="menu-list">
+                    <li><a class="is-active" @onclick="@(() => SetRoute<DraftBoard>())">Draft Board</a></li>
+                </ul>
+                <p class="menu-label">
+                    Administration
+                </p>
+                <ul class="menu-list">
+                    <li><a @onclick="@(() => SetRoute<LeagueSettings>())">League Settings</a></li>                                        
+                </ul>                
+            </aside>
+        </div>
+        <div class="column is-9">
+            <nav class="breadcrumb" aria-label="breadcrumbs">
+                <ul>                    
+                    <li class="is-active">
+                        <a href="#" aria-current="page">Dashboard</a>
+                    </li>
+                </ul>
+            </nav>
+            <section class="hero is-info welcome is-small">
+                <div class="hero-body">
+                    <div class="container">
+                        <h1 class="title">
+                            @League.Name
+                        </h1>                        
+                    </div>
+                </div>
+            </section>
+            <div class="content px-4">
+                @ChildRoute
+            </div>            
+        </div>
+    </div>
+</div>
+
+@code {    
+    LeagueViewModel League = new LeagueViewModel();
+
+    RenderFragment ChildRoute = CreateDynamicComponent<Login>();
+
+    protected override async Task OnInitAsync()
+    {
+        League = await Http.GetJsonAsync<LeagueViewModel>("leagues/1");        
+    }
+
+    void SetRoute<T>() => ChildRoute = CreateDynamicComponent<T>();
+
+    private static RenderFragment CreateDynamicComponent<T>() => builder =>
+    {
+        var type = typeof(T);
+        builder.OpenComponent(0, type);
+        //builder.AddAttribute(1, "LeagueId", 1);        
+        builder.CloseComponent();
+    };   
+}

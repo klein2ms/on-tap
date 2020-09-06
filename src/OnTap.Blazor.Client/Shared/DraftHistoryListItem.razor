@@ -1,0 +1,49 @@
+@using OnTap.Blazor.Shared
+
+<div id="draft-history-@DraftPick.Id" class="draft-history-list-item">
+  <div class="box">
+    <div class="level">
+@if (DraftPick.Player == null)
+{
+      <div class="level-left">
+        <div class="draft-pick-number level-item">
+          <p class="heading">@DraftPick.Number</p>
+        </div>
+        <div class="level-item">
+          <figure class="draft-pick-image">
+            <img src="https://placehold.it/24x24">
+          </figure>
+        </div>
+      </div>      
+      <div class="level-right">        
+        <div class="level-item">        
+          <p class="heading">@DraftPick.Team.Name</p>        
+        </div>
+      </div>
+}
+else
+{
+      <div class="level-left">
+        <div class="draft-pick-number level-item">
+          <p class="heading">@DraftPick.Number</p>
+        </div>
+        <div class="level-item">
+          <figure class="draft-pick-image">
+            <img src="https://placehold.it/24x24">
+          </figure>
+        </div>
+      </div>      
+      <div class="level-right">        
+        <div class="level-item">        
+          <p class="heading">@DraftPick.Player.FullName</p>        
+        </div>
+      </div>
+}
+    </div>
+  </div>
+</div>
+
+
+@code {    
+    [Parameter] DraftPickViewModel DraftPick {get; set; }
+}

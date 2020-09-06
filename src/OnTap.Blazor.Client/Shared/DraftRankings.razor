@@ -1,0 +1,120 @@
+@inherits DraftRankingsBase
+@using OnTap.Blazor.Shared
+
+<div class="tabs is-centered">
+  <ul>
+    <li class="is-active"><a>Rankings</a></li>    
+  </ul>
+</div>
+
+ <nav class="panel">  
+  <div class="panel-block">
+    <p class="control has-icons-left">
+      <input class="input is-small" type="text" placeholder="player search" @bind-value="@PlayerName" @bind-value:event="oninput" />
+      <span class="icon is-small is-left">
+        <i class="fas fa-search" aria-hidden="true"></i>
+      </span>
+    </p>
+  </div>
+<div class="panel-block">
+    <p class="control has-icons-left">
+    <div class="dropdown @SortMenuClass">
+        <div class="dropdown-trigger">
+          <button class="button is-small" @onclick="(() => IsSortMenuOpen = !IsSortMenuOpen)" aria-haspopup="true" aria-controls="dropdown-menu">
+            <span>Dropdown button</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <a @onclick="(() => Sort(DraftPickRecommender.AdpComparer))" class="dropdown-item">ADP</a>
+            <a @onclick="(() => Sort(DraftPickRecommender.VbdComparer))" class="dropdown-item">VBD</a>          
+          </div>
+        </div>
+      </div>      
+    </p>
+  </div> 
+  <p class="panel-tabs">
+    <a class="is-active" @onclick="ShowAll">All</a>
+    <a @onclick="(() => Filter(Position.Quarterback))">QB</a>
+    <a @onclick="(() => Filter(Position.RunningBack))">RB</a>
+    <a @onclick="(() => Filter(Position.WideReceiver))">WR</a>
+    <a @onclick="(() => Filter(Position.TightEnd))">TE</a>
+    <a @onclick="(() => Filter(Position.Kicker))">K</a>
+    <a @onclick="(() => Filter(Position.Defense))">DST</a>
+  </p>       
+</nav> 
+
+
+
+    @foreach (var player in FilteredPlayers)
+    {      
+            <div class="media box">
+  <figure class="media-left">
+    <p class="image is-32x32">
+      <img src="@player.TeamLogoUrl" alt="@player.TeamName">
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content">
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">            
+              <p class="title is-6">@player.FullName</p>                          
+          </div>
+          <div class="level-item">                          
+              <span class="tag">@player.PositionShortName</span>            
+          </div>          
+          <div class="level-item">
+            <div class="tags has-addons">
+              <span class="tag is-light">Bye</span>
+              <span class="tag">@player.ByeWeek</span>
+            </div>            
+          </div>
+        </div>
+        <div class="level-item">        
+          <nav class="level">
+            <div class="level-left">
+              
+            </div>
+          </nav>        
+        </div>
+        <div class="level-right">
+          <div class="level-item">
+            <div class="tags has-addons">
+              <span class="tag is-primary">VBD</span>
+              <span class="tag">@player.VbdScore</span>
+            </div>            
+          </div>
+          <div class="level-item">
+            <div class="tags has-addons">
+              <span class="tag is-primary">FP</span>
+              <span class="tag">@player.FantasyPoints</span>
+            </div>            
+          </div>
+          <div class="level-item">
+            <div class="tags has-addons">
+              <span class="tag is-primary">ADP</span>
+              <span class="tag">@player.Adp</span>              
+            </div> 
+          </div>
+        </div>
+      </nav>      
+    </div>
+    <nav class="level">
+        <div class="level-left">
+          <div class="level-item">            
+          </div>
+        </div>
+        <div class="level-right">
+          <a class="button" @onclick="@(() => OnDraft(@player))">Draft</a>
+        </div>
+      </nav>    
+  </div>
+  <!-- <div class="media-right">
+    <button class="delete"></button>
+  </div> -->
+</div>
+  }

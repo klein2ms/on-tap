@@ -1,0 +1,47 @@
+@using OnTap.Blazor.Shared
+
+<!-- <div class="card">
+    <header class="card-header">
+        <p class="card-header-title">
+            @Title
+        </p>
+        <a href="#" class="card-header-icon" aria-label="collapse">
+            <span class="icon">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+        </a>
+    </header>
+    <div class="card-content">
+        <div class="content">            
+            @foreach (var pick in @DraftPicks)
+            {
+                <DraftHistoryListItem DraftPick=pick />
+            }                
+        </div>
+    </div>
+    <footer class="card-footer">
+        <div class="card-footer-item">
+        </div>
+        <div class="card-footer-item">
+        </div>        
+    </footer>
+</div> -->
+
+<div class="tabs">
+  <ul>
+    <li class="is-active"><a>History</a></li>    
+  </ul>
+</div>
+
+<div class="content">            
+    @foreach (var pick in @DraftPicks)
+    {
+        <DraftHistoryListItem DraftPick=pick />
+    }                
+</div>
+
+@code {    
+    [Parameter] string Title { get; set; }
+
+    [Parameter] DraftPickViewModel[] DraftPicks { get; set; }
+}

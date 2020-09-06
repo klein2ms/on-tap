@@ -1,0 +1,66 @@
+@inherits DraftBoardBase
+@page "/draft-board/{DraftId:int}"
+
+@if (players == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{   
+    <div class="columns">
+        <div class="column is-3">                    
+          <div>@CurrentDraftPick.Number</div>                    
+          <div>@CurrentDraftPick.Player?.FullName</div>          
+          <div>@CurrentDraftPick.Team.Name</div>          
+        <div class="tabs is-centered">
+  <ul>
+    <li class="is-active"><a>Predictions</a></li>    
+  </ul>
+</div>          
+                
+                @foreach (var recommendation in recommendations)
+                {
+<div id="draft-prediction-@recommendation.Player.Id" class="draft-history-list-item">
+  <div class="box">
+    <div class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <p class="image is-32x32">
+            <img src="@recommendation.Player.TeamLogoUrl" alt="@recommendation.Player.TeamName">
+          </p>
+        </div>
+        <div class="level-item">
+          <p class="heading">@recommendation.Player.FullName</p>
+        </div>
+        <div class="level-item">        
+            <p class="heading">@recommendation.Player.PositionShortName</p>        
+        </div>        
+      </div>      
+      <div class="level-right">
+        <div class="level-item">                
+            <p class="heading">@recommendation.Team.Name</p>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>                   
+               
+            
+                }                
+        </div>
+
+        <div class="column is-6">
+            
+                <DraftRankings Players=players OnDraft=HandleOnDraft />                
+            
+        </div>
+
+        <div class="column is-3">
+            
+                <DraftHistory DraftPicks=draftHistory />
+
+                <Rosters Team=CurrentDraftPick.Team />
+            
+        </div>
+    </div>            
+}

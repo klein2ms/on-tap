@@ -1,0 +1,34 @@
+@using OnTap.Blazor.Shared
+
+<div class="card">    
+    <div class="card-content">
+        <div class="content">
+            <div class="media">
+                <div class="media-left">
+                    <figure class="image is-48x48">
+                        <img src="@Player.TeamLogoUrl" alt="Team Logo">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <p class="title is-4">@Player.FullName</p>
+                    <p class="subtitle is-6"></p>
+                </div>
+            </div>
+
+            <div class="content">                                
+            </div>           
+        </div>
+    </div>
+    <footer class="card-footer">
+        <div class="card-footer-item">
+        </div>
+        <div class="card-footer-item">
+        </div>        
+    </footer>
+</div>
+
+@code {    
+    [Parameter] PlayerViewModel Player { get; set; }
+
+
+}
